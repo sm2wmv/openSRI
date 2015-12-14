@@ -5,8 +5,8 @@
 #include "comm_interface.h"
 #include "commands.h"
 #include "computer_interface.h"
-#include "lcd.h"
 #include "misc.h"
+#include "display.h"
 
 struct_status status;
 
@@ -17,15 +17,23 @@ void status_update_to_computer(uint8_t *data, uint16_t offset, uint8_t length) {
 }
 
 void status_set_vfoA_mode(uint8_t mode) {
-  status.radio.vfoA_mode = mode;
+  if (mode != status.radio.vfoA_mode) {
+    status.radio.vfoA_mode = mode;
+    status.radio.vfoA_mode_type = status_get_vfoA_mode_type();
 
-  STATUS_UPDATE_TO_COMPUTER(status.radio.vfoA_mode);
+    STATUS_UPDATE_TO_COMPUTER(status.radio);
+    display_update_status();
+  }
 }
 
 void status_set_vfoB_mode(uint8_t mode) {
-  status.radio.vfoB_mode = mode;
+  if (mode != status.radio.vfoB_mode) {
+    status.radio.vfoB_mode = mode;
+    status.radio.vfoB_mode_type = status_get_vfoB_mode_type();
 
-  STATUS_UPDATE_TO_COMPUTER(status.radio.vfoB_mode);
+    STATUS_UPDATE_TO_COMPUTER(status.radio);
+    display_update_status();
+  }
 }
 
 uint8_t status_get_vfoA_mode(void) {
@@ -34,6 +42,72 @@ uint8_t status_get_vfoA_mode(void) {
 
 uint8_t status_get_vfoB_mode(void) {
   return(status.radio.vfoB_mode);
+}
+
+uint8_t status_get_vfoA_mode_type(void) {
+  uint8_t mode = status.radio.vfoA_mode;
+
+  if (mode == STATUS_RADIO_MODE_CW)
+    return(STATUS_RADIO_MODE_TYPE_CW);
+  else if (mode == STATUS_RADIO_MODE_CWR)
+    return(STATUS_RADIO_MODE_TYPE_CW);
+  else if (mode == STATUS_RADIO_MODE_LSB)
+    return(STATUS_RADIO_MODE_TYPE_PHONE);
+  else if (mode == STATUS_RADIO_MODE_USB)
+    return(STATUS_RADIO_MODE_TYPE_PHONE);
+  else if (mode == STATUS_RADIO_MODE_FM)
+    return(STATUS_RADIO_MODE_TYPE_PHONE);
+  else if (mode == STATUS_RADIO_MODE_AM)
+    return(STATUS_RADIO_MODE_TYPE_PHONE);
+  else if (mode == STATUS_RADIO_MODE_LSB)
+    return(STATUS_RADIO_MODE_TYPE_PHONE);
+  else if (mode == STATUS_RADIO_MODE_FSK)
+    return(STATUS_RADIO_MODE_TYPE_DIGITAL);
+  else if (mode == STATUS_RADIO_MODE_PKTL)
+    return(STATUS_RADIO_MODE_TYPE_DIGITAL);
+  else if (mode == STATUS_RADIO_MODE_FSKR)
+    return(STATUS_RADIO_MODE_TYPE_DIGITAL);
+  else if (mode == STATUS_RADIO_MODE_PKTFM)
+    return(STATUS_RADIO_MODE_TYPE_DIGITAL);
+  else if (mode == STATUS_RADIO_MODE_FMN)
+    return(STATUS_RADIO_MODE_TYPE_PHONE);
+  else if (mode == STATUS_RADIO_MODE_PKTU)
+    return(STATUS_RADIO_MODE_TYPE_DIGITAL);
+
+  return(STATUS_RADIO_MODE_TYPE_UNKNOWN);
+}
+
+uint8_t status_get_vfoB_mode_type(void) {
+  uint8_t mode = status.radio.vfoB_mode;
+
+  if (mode == STATUS_RADIO_MODE_CW)
+    return(STATUS_RADIO_MODE_TYPE_CW);
+  else if (mode == STATUS_RADIO_MODE_CWR)
+    return(STATUS_RADIO_MODE_TYPE_CW);
+  else if (mode == STATUS_RADIO_MODE_LSB)
+    return(STATUS_RADIO_MODE_TYPE_PHONE);
+  else if (mode == STATUS_RADIO_MODE_USB)
+    return(STATUS_RADIO_MODE_TYPE_PHONE);
+  else if (mode == STATUS_RADIO_MODE_FM)
+    return(STATUS_RADIO_MODE_TYPE_PHONE);
+  else if (mode == STATUS_RADIO_MODE_AM)
+    return(STATUS_RADIO_MODE_TYPE_PHONE);
+  else if (mode == STATUS_RADIO_MODE_LSB)
+    return(STATUS_RADIO_MODE_TYPE_PHONE);
+  else if (mode == STATUS_RADIO_MODE_FSK)
+    return(STATUS_RADIO_MODE_TYPE_DIGITAL);
+  else if (mode == STATUS_RADIO_MODE_PKTL)
+    return(STATUS_RADIO_MODE_TYPE_DIGITAL);
+  else if (mode == STATUS_RADIO_MODE_FSKR)
+    return(STATUS_RADIO_MODE_TYPE_DIGITAL);
+  else if (mode == STATUS_RADIO_MODE_PKTFM)
+    return(STATUS_RADIO_MODE_TYPE_DIGITAL);
+  else if (mode == STATUS_RADIO_MODE_FMN)
+    return(STATUS_RADIO_MODE_TYPE_PHONE);
+  else if (mode == STATUS_RADIO_MODE_PKTU)
+    return(STATUS_RADIO_MODE_TYPE_DIGITAL);
+
+  return(STATUS_RADIO_MODE_TYPE_UNKNOWN);
 }
 
 void status_update_from_computer(uint8_t *data, uint16_t offset, uint8_t length) {
@@ -45,25 +119,35 @@ void status_update_from_computer(uint8_t *data, uint16_t offset, uint8_t length)
 
 void status_execute_update(void) {
   STATUS_UPDATE_TO_COMPUTER(status);
+  display_update_status();
 }
 
 
 void status_set_vfoA_freq(uint32_t freq) {
-  status.radio.vfoA_freq = freq;
+  if (freq != status.radio.vfoA_freq) {
+    status.radio.vfoA_freq = freq;
 
-  STATUS_UPDATE_TO_COMPUTER(status.radio.vfoA_freq);
+    STATUS_UPDATE_TO_COMPUTER(status.radio.vfoA_freq);
+    display_update_status();
+  }
 }
 
 void status_set_vfoB_freq(uint32_t freq) {
-  status.radio.vfoB_freq = freq;
+  if (freq != status.radio.vfoB_freq) {
+    status.radio.vfoB_freq = freq;
 
-  STATUS_UPDATE_TO_COMPUTER(status.radio.vfoA_freq);
+    STATUS_UPDATE_TO_COMPUTER(status.radio.vfoB_freq);
+    display_update_status();
+  }
 }
 
 void status_set_vfoAB_txrx_state(uint8_t state) {
-  status.radio.vfoAB_tx_rx_state = state;
+  if (state != status.radio.vfoAB_tx_rx_state) {
+    status.radio.vfoAB_tx_rx_state = state;
 
-  STATUS_UPDATE_TO_COMPUTER(status.radio.vfoAB_tx_rx_state);
+    STATUS_UPDATE_TO_COMPUTER(status.radio.vfoAB_tx_rx_state);
+    display_update_status();
+  }
 }
 
 uint32_t status_get_vfoA_freq(void) {
@@ -101,15 +185,12 @@ uint8_t status_get_ptt_input_state(uint8_t bit_nr) {
 }
 
 void status_set_winkey_pot_speed(uint8_t speed) {
-  status.winkey.pot_speed = speed;
+  if (speed != status.winkey.pot_speed) {
+    status.winkey.pot_speed = speed;
 
-  uint8_t str[17];
-  sprintf(str,"CW Speed: %i WPM",speed);
-
-  lcd_goto_xy(0,0);
-  lcd_put_string(LCD_LINE1, str);
-
-  STATUS_UPDATE_TO_COMPUTER(status.winkey.pot_speed);
+    STATUS_UPDATE_TO_COMPUTER(status.winkey.pot_speed);
+    display_update_status();
+  }
 }
 
 uint8_t status_get_winkey_pot_speed() {
@@ -124,4 +205,6 @@ void status_set_winkey_transmitted_character(uint8_t c) {
 
     comm_interface_add_tx_message(SRI_CMD_WINKEY, 2, data);
   }
+
+  display_update_winkey_tx_char(c);
 }

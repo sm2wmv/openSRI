@@ -5,8 +5,8 @@
 #include "sequencer.h"
 #include "ctrl.h"
 
-volatile static uint16_t counter_event_10us = 0;
-volatile static uint16_t counter_event_1ms = 0;
+static volatile uint16_t counter_event_10us = 0;
+static volatile uint16_t counter_event_1ms = 0;
 
 volatile struct_event_status event_status;
 
@@ -17,7 +17,7 @@ uint8_t event_handler_get_ptt_status(void) {
 void event_handler_ptt_radio_activate(void) {
   PRINTF("EVENT_HANDLER: RADIO PTT ACTIVE\n\r");
 
-  if (status_get_vfoA_mode() == STATUS_RADIO_MODE_CW) {
+  if (status_get_vfoA_mode_type() == STATUS_RADIO_MODE_TYPE_CW) {
     if ((settings_get_radio_cw_ptt() == SETTINGS_PTT_RADIO_OUTPUT_1) || (settings_get_radio_cw_ptt() == SETTINGS_PTT_RADIO_OUTPUT_1_2)) {
       ctrl_radio_ptt_1_set();
     }
@@ -31,7 +31,7 @@ void event_handler_ptt_radio_activate(void) {
       ctrl_radio_ptt_2_clr(); //Make sure the output is off
     }
   }
-  else if (status_get_vfoA_mode() == STATUS_RADIO_MODE_PHONE) {
+  else if (status_get_vfoA_mode_type() == STATUS_RADIO_MODE_TYPE_PHONE) {
     if ((settings_get_radio_phone_ptt() == SETTINGS_PTT_RADIO_OUTPUT_1) || (settings_get_radio_phone_ptt() == SETTINGS_PTT_RADIO_OUTPUT_1_2)) {
       ctrl_radio_ptt_1_set();
     }
@@ -45,7 +45,7 @@ void event_handler_ptt_radio_activate(void) {
       ctrl_radio_ptt_2_clr(); //Make sure the output is off
     }
   }
-  else if (status_get_vfoA_mode() == STATUS_RADIO_MODE_DIGITAL) {
+  else if (status_get_vfoA_mode_type() == STATUS_RADIO_MODE_TYPE_DIGITAL) {
     if ((settings_get_radio_digital_ptt() == SETTINGS_PTT_RADIO_OUTPUT_1) || (settings_get_radio_digital_ptt() == SETTINGS_PTT_RADIO_OUTPUT_1_2)) {
       ctrl_radio_ptt_1_set();
     }
@@ -64,7 +64,7 @@ void event_handler_ptt_radio_activate(void) {
 void event_handler_ptt_radio_deactivate(void) {
   PRINTF("EVENT_HANDLER: RADIO PTT DEACTIVE\n\r");
 
-  if (status_get_vfoA_mode() == STATUS_RADIO_MODE_CW) {
+  if (status_get_vfoA_mode_type() == STATUS_RADIO_MODE_TYPE_CW) {
     if ((settings_get_radio_cw_ptt() == SETTINGS_PTT_RADIO_OUTPUT_1) || (settings_get_radio_cw_ptt() == SETTINGS_PTT_RADIO_OUTPUT_1_2)) {
       ctrl_radio_ptt_1_clr();
     }
@@ -78,7 +78,7 @@ void event_handler_ptt_radio_deactivate(void) {
       ctrl_radio_ptt_2_clr(); //Make sure the output is off
     }
   }
-  else if (status_get_vfoA_mode() == STATUS_RADIO_MODE_PHONE) {
+  else if (status_get_vfoA_mode_type() == STATUS_RADIO_MODE_TYPE_PHONE) {
     if ((settings_get_radio_phone_ptt() == SETTINGS_PTT_RADIO_OUTPUT_1) || (settings_get_radio_phone_ptt() == SETTINGS_PTT_RADIO_OUTPUT_1_2)) {
       ctrl_radio_ptt_1_clr();
     }
@@ -92,7 +92,7 @@ void event_handler_ptt_radio_deactivate(void) {
       ctrl_radio_ptt_2_clr(); //Make sure the output is off
     }
   }
-  else if (status_get_vfoA_mode() == STATUS_RADIO_MODE_DIGITAL) {
+  else if (status_get_vfoA_mode_type() == STATUS_RADIO_MODE_TYPE_DIGITAL) {
     if ((settings_get_radio_digital_ptt() == SETTINGS_PTT_RADIO_OUTPUT_1) || (settings_get_radio_digital_ptt() == SETTINGS_PTT_RADIO_OUTPUT_1_2)) {
       ctrl_radio_ptt_1_clr();
     }

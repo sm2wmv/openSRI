@@ -11,11 +11,6 @@
 //! The timeout limit to know we have lost connection to the computer
 #define SRI_PING_TIMEOUT_LIMIT     5000
 
-//! The size of the RX FIFO of the UART
-#define UART_RX_FIFO_SIZE 16
-//! The size of the TX FIFO of the UART
-#define UART_TX_FIFO_SIZE 16
-
 typedef struct {
   uint8_t various;
 } struct_flags;

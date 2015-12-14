@@ -29,7 +29,7 @@ all: SRI_v1.axf
 SRI_v1.axf: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: MCU Linker'
-	arm-none-eabi-gcc -nostdlib -L"C:\Users\micke\Documents\LPCXpresso_8.0.0_526\workspace\CDL" -Xlinker -Map="SRI_v1.map" -Xlinker --gc-sections -mcpu=cortex-m3 -mthumb -T "SRI_v1_LPC17xx.ld" -o "SRI_v1.axf" $(OBJS) $(USER_OBJS) $(LIBS)
+	arm-none-eabi-gcc -nostdlib -L"C:\Users\micke\git\openSRI\CDL" -Xlinker -Map="SRI_v1.map" -Xlinker --gc-sections -mcpu=cortex-m3 -mthumb -T "SRI_v1_LPC17xx.ld" -o "SRI_v1.axf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 	$(MAKE) --no-print-directory post-build

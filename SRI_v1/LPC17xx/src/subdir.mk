@@ -11,6 +11,7 @@ C_SRCS += \
 ../src/cr_startup_lpc176x.c \
 ../src/ctrl.c \
 ../src/cw_ctrl.c \
+../src/display.c \
 ../src/eeprom_m24.c \
 ../src/event_handler.c \
 ../src/event_queue.c \
@@ -35,6 +36,7 @@ OBJS += \
 ./src/cr_startup_lpc176x.o \
 ./src/ctrl.o \
 ./src/cw_ctrl.o \
+./src/display.o \
 ./src/eeprom_m24.o \
 ./src/event_handler.o \
 ./src/event_queue.o \
@@ -59,6 +61,7 @@ C_DEPS += \
 ./src/cr_startup_lpc176x.d \
 ./src/ctrl.d \
 ./src/cw_ctrl.d \
+./src/display.d \
 ./src/eeprom_m24.d \
 ./src/event_handler.d \
 ./src/event_queue.d \
@@ -80,14 +83,14 @@ C_DEPS += \
 src/%.o: ../src/%.c
 	@echo 'Building file: $<'
 	@echo 'Invoking: MCU C Compiler'
-	arm-none-eabi-gcc -D__LPC17XX__ -DUSB_DEVICE_ONLY -D__USE_CMSIS=CMSISv2p00_LPC17xx -D__REDLIB__ -D__CODE_RED -I"C:\Users\micke\Documents\LPCXpresso_8.0.0_526\workspace\CDL\CMSISv2p00_LPC17xx\inc" -I"C:\Users\micke\Documents\LPCXpresso_8.0.0_526\workspace\CDL\CMSISv2p00_LPC17xx\lpcinc" -I"C:\Users\micke\Documents\LPCXpresso_8.0.0_526\workspace\CDL\LPC17xxLib\inc" -I"C:\Users\micke\Documents\LPCXpresso_8.0.0_526\workspace\SRI_v1\include" -O0 -g3 -Wall -Wextra -c -fmessage-length=0 -fno-builtin -ffunction-sections -fdata-sections -std=gnu99 -mcpu=cortex-m3 -mthumb -D__REDLIB__ -specs=redlib.specs -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
+	arm-none-eabi-gcc -D__LPC17XX__ -DUSB_DEVICE_ONLY -D__USE_CMSIS=CMSISv2p00_LPC17xx -D__REDLIB__ -D__CODE_RED -I"C:\Users\micke\git\openSRI\CDL\CMSISv2p00_LPC17xx\inc" -I"C:\Users\micke\git\openSRI\CDL\CMSISv2p00_LPC17xx\lpcinc" -I"C:\Users\micke\git\openSRI\CDL\LPC17xxLib\inc" -I"C:\Users\micke\git\openSRI\SRI_v1\include" -O0 -g3 -Wall -Wextra -c -fmessage-length=0 -fno-builtin -ffunction-sections -fdata-sections -std=gnu99 -mcpu=cortex-m3 -mthumb -D__REDLIB__ -specs=redlib.specs -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 
 src/main.o: ../src/main.c
 	@echo 'Building file: $<'
 	@echo 'Invoking: MCU C Compiler'
-	arm-none-eabi-gcc -D__LPC17XX__ -DUSB_DEVICE_ONLY -D__USE_CMSIS=CMSISv2p00_LPC17xx -D__REDLIB__ -D__CODE_RED -I"C:\Users\micke\Documents\LPCXpresso_8.0.0_526\workspace\CDL\CMSISv2p00_LPC17xx\inc" -I"C:\Users\micke\Documents\LPCXpresso_8.0.0_526\workspace\CDL\CMSISv2p00_LPC17xx\lpcinc" -I"C:\Users\micke\Documents\LPCXpresso_8.0.0_526\workspace\CDL\LPC17xxLib\inc" -I"C:\Users\micke\Documents\LPCXpresso_8.0.0_526\workspace\SRI_v1\include" -O0 -g3 -Wall -Wextra -c -fmessage-length=0 -fno-builtin -ffunction-sections -fdata-sections -std=gnu99 -mcpu=cortex-m3 -mthumb -D__REDLIB__ -specs=redlib.specs -MMD -MP -MF"$(@:%.o=%.d)" -MT"src/main.d" -o "$@" "$<"
+	arm-none-eabi-gcc -D__LPC17XX__ -DUSB_DEVICE_ONLY -D__USE_CMSIS=CMSISv2p00_LPC17xx -D__REDLIB__ -D__CODE_RED -I"C:\Users\micke\git\openSRI\CDL\CMSISv2p00_LPC17xx\inc" -I"C:\Users\micke\git\openSRI\CDL\CMSISv2p00_LPC17xx\lpcinc" -I"C:\Users\micke\git\openSRI\CDL\LPC17xxLib\inc" -I"C:\Users\micke\git\openSRI\SRI_v1\include" -O0 -g3 -Wall -Wextra -c -fmessage-length=0 -fno-builtin -ffunction-sections -fdata-sections -std=gnu99 -mcpu=cortex-m3 -mthumb -D__REDLIB__ -specs=redlib.specs -MMD -MP -MF"$(@:%.o=%.d)" -MT"src/main.d" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 

@@ -17,21 +17,55 @@
   #define int64_t qint64
 #endif
 
-//! Bit is set if VFO A has got TX focus
-#define STATUS_VFO_TXRX_VFOA_TX   0
-//! Bit is set if VFO A has got RX focus
-#define STATUS_VFO_TXRX_VFOA_RX   1
-//! Bit is set if VFO B has got TX focus
-#define STATUS_VFO_TXRX_VFOB_TX   2
-//! Bit is set if VFO B has got RX focus
-#define STATUS_VFO_TXRX_VFOB_RX   3
 
-//! Bit is set if radio is in CW mode
-#define STATUS_RADIO_MODE_CW        0
-//! Bit is set if radio is in PHONE mode
-#define STATUS_RADIO_MODE_PHONE     1
-//! Bit is set if radio is in DIGITAL
-#define STATUS_RADIO_MODE_DIGITAL   2
+//! Bit is set if VFO A has got TX focus
+#define STATUS_VFO_TXRX_VFOA_TX             0
+//! Bit is set if VFO B has got TX focus
+#define STATUS_VFO_TXRX_VFOB_TX             1
+//! Bit is set if VFO A has got RX focus
+#define STATUS_VFO_TXRX_VFOA_RX             2
+//! Bit is set if VFO A has got RX Muted
+#define STATUS_VFO_TXRX_VFOA_MUTE           3
+//! Bit is set if VFO B has got RX focus
+#define STATUS_VFO_TXRX_VFOB_RX             4
+//! Bit is set if VFO B has got RX Muted
+#define STATUS_VFO_TXRX_VFOB_MUTE           5
+
+//! The type of mode the radio has got is CW
+#define STATUS_RADIO_MODE_TYPE_UNKNOWN  0
+//! The type of mode the radio has got is CW
+#define STATUS_RADIO_MODE_TYPE_CW       1
+//! The type of mode the radio has got is PHONE
+#define STATUS_RADIO_MODE_TYPE_PHONE    2
+//! The type of mode the radio has got is DIGITAL
+#define STATUS_RADIO_MODE_TYPE_DIGITAL  3
+
+//! This is set if the radio mode is unknown
+#define STATUS_RADIO_MODE_UNKNOWN     0
+//! This is set if radio is in LSB
+#define STATUS_RADIO_MODE_LSB         1
+//! This is set if radio is in USB
+#define STATUS_RADIO_MODE_USB         2
+//! This is set if radio is in CW
+#define STATUS_RADIO_MODE_CW          3
+//! This is set if radio is in FM
+#define STATUS_RADIO_MODE_FM          4
+//! This is set if radio is in AM
+#define STATUS_RADIO_MODE_AM          5
+//! This is set if radio is in FSK
+#define STATUS_RADIO_MODE_FSK         6
+//! This is set if radio is in CW-R
+#define STATUS_RADIO_MODE_CWR         7
+//! This is set if radio is in PKT-L
+#define STATUS_RADIO_MODE_PKTL        8
+//! This is set if radio is in FSK-R
+#define STATUS_RADIO_MODE_FSKR        9
+//! This is set if radio is in PKT-FM
+#define STATUS_RADIO_MODE_PKTFM       10
+//! This is set if radio is in FM-N
+#define STATUS_RADIO_MODE_FMN         11
+//! This is set if radio is in PKT-U
+#define STATUS_RADIO_MODE_PKTU        12
 
 //! Bit which shows PTT input via the Footswitch
 #define STATUS_PTT_INPUT_FOOTSWITCH    0
@@ -57,6 +91,10 @@ typedef struct __attribute__ ((aligned(1))) {
   uint8_t vfoA_mode;
   //! The current VFO B mode
   uint8_t vfoB_mode;
+  //! The current VFO A mode type
+  uint8_t vfoA_mode_type;
+  //! The current VFO B mode type
+  uint8_t vfoB_mode_type;
 } struct_radio_status;
 
 typedef struct __attribute__ ((aligned(1))) {
@@ -88,6 +126,8 @@ void status_set_vfoAB_txrx_state(uint8_t state);
 
 uint8_t status_get_vfoA_mode(void);
 uint8_t status_get_vfoB_mode(void);
+uint8_t status_get_vfoA_mode_type(void);
+uint8_t status_get_vfoB_mode_type(void);
 uint32_t status_get_vfoA_freq(void);
 uint32_t status_get_vfoB_freq(void);
 uint8_t status_get_vfoAB_txrx_state(void);
